@@ -1,0 +1,15 @@
+{
+  "eks_cluster_config": "eks-cluster.yaml",
+  "docker_images": [
+    "<dockerhub-user>/eks-backend:latest",
+    "<dockerhub-user>/eks-frontend:latest"
+  ],
+  "k8s_manifests": [
+    "k8s/backend.yaml",
+    "k8s/frontend.yaml",
+    "k8s/deployment.yaml",
+    "k8s/service.yaml",
+    "k8s/ingress.yaml"
+  ],
+  "setup_guide": "project-setup-guide.md"
+}
