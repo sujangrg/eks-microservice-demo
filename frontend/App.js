@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
+
 function App() {
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
 
+  // Read BACKEND_API_URL from window (set by config.js at runtime)
+  const API_URL = typeof window !== 'undefined' && window.BACKEND_API_URL ? window.BACKEND_API_URL : '';
+
   useEffect(() => {
-    fetch('/api/todos')
+    fetch(`${API_URL}/api/todos`)
       .then(res => res.json())
       .then(setTodos);
-  }, []);
+  }, [API_URL]);
 
   const addTodo = async () => {
-    const res = await fetch('/api/todos', {
+    const res = await fetch(`${API_URL}/api/todos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text })
@@ -22,7 +26,7 @@ function App() {
   };
 
   const toggleTodo = async (id, completed) => {
-    await fetch(`/api/todos/${id}`, {
+    await fetch(`${API_URL}/api/todos/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ completed })
@@ -31,7 +35,7 @@ function App() {
   };
 
   const deleteTodo = async (id) => {
-    await fetch(`/api/todos/${id}`, { method: 'DELETE' });
+    await fetch(`${API_URL}/api/todos/${id}`, { method: 'DELETE' });
     setTodos(todos.filter(t => t.id !== id));
   };
 
