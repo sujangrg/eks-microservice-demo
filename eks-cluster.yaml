@@ -6,9 +6,9 @@ metadata:
 managedNodeGroups:
   - name: ng-1
     instanceType: t3.medium
-    desiredCapacity: 2
+    desiredCapacity: 1
     minSize: 1
-    maxSize: 3
+    maxSize: 1
     ssh:
       allow: true
 
