@@ -12,6 +12,7 @@ spec:
       labels:
         app: todo-backend
     spec:
+      serviceAccountName: todo-backend-sa
       containers:
       - name: todo-backend
         image: sujan/todo-backend:latest
@@ -30,6 +31,9 @@ spec:
             secretKeyRef:
               name: todo-secret
               key: API_KEY
+#
+# If using AWS Secrets Manager with IRSA, update your app to fetch the secret using the AWS SDK at runtime.
+# The serviceAccountName above enables the pod to assume the IAM role for secret access.
 ---
 apiVersion: v1
 kind: Service
