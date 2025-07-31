@@ -2,6 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const API_KEY = process.env.API_KEY;
+
+
+// Load API key if exists in environment variables
+console.log('Loaded API_KEY from secret:', API_KEY);
+
 
 app.use(cors());
 app.use(express.json());
@@ -41,4 +47,9 @@ app.delete('/api/todos/:id', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Todo backend running on port ${PORT}`);
+});
+
+// Get Secret API Key
+app.get('/api/secret', (req, res) => {
+  res.json({ apiKey: process.env.API_KEY });
 });

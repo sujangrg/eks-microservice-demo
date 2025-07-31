@@ -1,4 +1,37 @@
+
 # Instructions: EKS Todo App with React Frontend, Node.js Backend, and AWS ALB Ingress
+## Handling Secrets in the Backend
+
+To securely provide sensitive values (like API keys) to your backend, use Kubernetes Secrets:
+
+### 1. Create a Secret
+
+```
+kubectl create secret generic todo-secret --from-literal=API_KEY=my-secret-key
+```
+
+### 2. Reference the Secret in the Backend Deployment
+
+In `k8s/backend.yaml`, the deployment references the secret as an environment variable:
+
+```yaml
+env:
+  - name: API_KEY
+    valueFrom:
+      secretKeyRef:
+        name: todo-secret
+        key: API_KEY
+```
+
+### 3. Access the Secret in Your App
+
+In your Node.js backend, use:
+
+```js
+const API_KEY = process.env.API_KEY;
+```
+
+You can now use `API_KEY` in your application logic.
 
 ## 1. Prerequisites
 - eksctl, kubectl, Docker, and AWS CLI installed
@@ -58,7 +91,7 @@ docker push <your-dockerhub-username>/todo-frontend:latest
 ```
 kubectl apply -f k8s/backend.yaml
 kubectl apply -f k8s/frontend.yaml
-kubectl apply -f k8s/ingress.yaml
+kubectl apply -f k8s/nlb.yaml
 ```
 
 ## 7. Access the App

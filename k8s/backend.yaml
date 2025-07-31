@@ -24,6 +24,12 @@ spec:
           limits:
             cpu: "500m"
             memory: "256Mi"
+        env:
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: todo-secret
+              key: API_KEY
 ---
 apiVersion: v1
 kind: Service
@@ -37,3 +43,7 @@ spec:
       port: 3000
       targetPort: 3000
   type: ClusterIP
+#
+# To access this backend service from another pod in the same namespace, use:
+#   http://todo-backend:3000
+# as the BACKEND_API_URL environment variable in your frontend deployment.

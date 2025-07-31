@@ -24,6 +24,9 @@ spec:
           limits:
             cpu: "500m"
             memory: "256Mi"
+        env:
+        - name: BACKEND_API_URL
+          value: "http://todo-backend:3000"
 ---
 apiVersion: v1
 kind: Service
